@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'Widget/expence.dart';
 
 void main() {
-  runApp(const MaterialApp(
-
+  runApp( MaterialApp(
+    theme: ThemeData(
+      useMaterial3: true, // Enables Material 3
+    ),
     home: MyApp(),
   ));
 }

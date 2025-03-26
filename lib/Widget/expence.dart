@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../Model/expensesmodel.dart';
 import 'expences_List.dart';
+import 'newExpaenselist.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -34,40 +35,40 @@ class _MyAppState extends State<MyApp> {
         date: DateTime.now(),
         category: Category.Others),
   ];
-void _bottomOverlay(){
-  showModalBottomSheet(context: context,builder: (context) => Container(
-    height: 200,
-    color: Colors.amber,
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Text('Modal BottomSheet'),
-          ElevatedButton(
-            child: const Text('Close BottomSheet'),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-    ),
-  ) ,);
+
+  void _bottomOverlay() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      useSafeArea: true,
+      context: context,
+      builder: (ctxt) =>
+          Container(height:double.infinity,child: Newexpaenselist(addExpesnse: _addExpense)),
+    );
+  }
+
+  void _addExpense(Expences expence) {
+    setState(() {
+      _ListOfRegisterExpences.add(expence);
+    });
+  }
+void _OnremoveExpence(Expences expence){
+    setState(() {
+      _ListOfRegisterExpences.remove(expence);
+    });
 }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expences App'),
-        actions: [
-          IconButton(onPressed: _bottomOverlay, icon:Icon(Icons.add))
-        ],
+        actions: [IconButton(onPressed: _bottomOverlay, icon: Icon(Icons.add))],
       ),
       body: Column(
         children: [
           Text('chart '),
           Expanded(
             child: expenceList(
-              expence: _ListOfRegisterExpences,
+              expence: _ListOfRegisterExpences,OnRemoveExpense: _OnremoveExpence,
             ),
           )
         ],
