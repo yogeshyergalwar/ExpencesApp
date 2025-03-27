@@ -38,7 +38,7 @@ void main() {
       appBarTheme: AppBarTheme().copyWith(
           backgroundColor: kColorSheme.onPrimaryContainer,
           foregroundColor: kColorSheme.onPrimary),
-    ),
+    ),debugShowCheckedModeBanner: false,
 //themeMode:ThemeMode.system,default
     home: MyApp(),
   ));

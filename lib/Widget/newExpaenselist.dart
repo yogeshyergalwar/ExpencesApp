@@ -45,7 +45,7 @@ class _NewexpaenselistState extends State<Newexpaenselist> {
           context: context,
           builder: (cxt) => AlertDialog(
                 title: Text('Invalid Input'),
-                content: Text('Please Fill Valid Data'),
+                content: Text('Please Fill Valid Data OR Missing Data'),
                 actions: [
                   TextButton(
                       onPressed: () {

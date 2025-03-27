@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Model/expensesmodel.dart';
+import 'chart.dart';
 import 'expences_List.dart';
 import 'newExpaenselist.dart';
 
@@ -93,7 +94,7 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Column(
         children: [
-          Text('chart '),
+          Chart(expenses:_ListOfRegisterExpences ,),
           Expanded(
             child: maincontent,
           )
