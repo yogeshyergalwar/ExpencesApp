@@ -41,8 +41,9 @@ class _MyAppState extends State<MyApp> {
       isScrollControlled: true,
       useSafeArea: true,
       context: context,
-      builder: (ctxt) =>
-          Container(height:double.infinity,child: Newexpaenselist(addExpesnse: _addExpense)),
+      builder: (ctxt) => Container(
+          height: double.infinity,
+          child: Newexpaenselist(addExpesnse: _addExpense)),
     );
   }
 
@@ -51,13 +52,40 @@ class _MyAppState extends State<MyApp> {
       _ListOfRegisterExpences.add(expence);
     });
   }
-void _OnremoveExpence(Expences expence){
+
+  void _OnremoveExpence(Expences expence) {
+    final indexElemet=_ListOfRegisterExpences.indexOf(expence);
     setState(() {
       _ListOfRegisterExpences.remove(expence);
     });
-}
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 3),
+        content: Text('Expense Deleted'),
+        action: SnackBarAction(
+          onPressed: (){
+            setState(() {
+              _ListOfRegisterExpences.insert(indexElemet, expence);
+            });
+          },
+          label: 'Undo',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget maincontent = Center(
+      child: Text('No expences Found,Start Adding Some'),
+    );
+    if (_ListOfRegisterExpences.isNotEmpty) {
+      maincontent = expenceList(
+        expence: _ListOfRegisterExpences,
+        OnRemoveExpense: _OnremoveExpence,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Expences App'),
@@ -67,9 +95,7 @@ void _OnremoveExpence(Expences expence){
         children: [
           Text('chart '),
           Expanded(
-            child: expenceList(
-              expence: _ListOfRegisterExpences,OnRemoveExpense: _OnremoveExpence,
-            ),
+            child: maincontent,
           )
         ],
       ),
