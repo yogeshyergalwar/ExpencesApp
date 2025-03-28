@@ -17,28 +17,29 @@ class _MyAppState extends State<MyApp> {
   final List<Expences> _ListOfRegisterExpences = [
     Expences(
         tittle: 'Flutter Course',
-        amount: 500.00,
+        amount: 50.00,
         date: DateTime.now(),
         category: Category.Work),
     Expences(
         tittle: 'Foods',
-        amount: 500.00,
+        amount: 30.00,
         date: DateTime.now(),
         category: Category.Food),
     Expences(
         tittle: 'Travels',
-        amount: 500.00,
+        amount: 10.00,
         date: DateTime.now(),
         category: Category.Travel),
     Expences(
         tittle: 'others',
-        amount: 500.00,
+        amount: 5.00,
         date: DateTime.now(),
         category: Category.Others),
   ];
 
   void _bottomOverlay() {
     showModalBottomSheet(
+
       isScrollControlled: true,
       useSafeArea: true,
       context: context,
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _OnremoveExpence(Expences expence) {
-    final indexElemet=_ListOfRegisterExpences.indexOf(expence);
+    final indexElemet = _ListOfRegisterExpences.indexOf(expence);
     setState(() {
       _ListOfRegisterExpences.remove(expence);
     });
@@ -65,7 +66,7 @@ class _MyAppState extends State<MyApp> {
         duration: Duration(seconds: 3),
         content: Text('Expense Deleted'),
         action: SnackBarAction(
-          onPressed: (){
+          onPressed: () {
             setState(() {
               _ListOfRegisterExpences.insert(indexElemet, expence);
             });
@@ -78,6 +79,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final heifht = MediaQuery.of(context).size.height;
     Widget maincontent = Center(
       child: Text('No expences Found,Start Adding Some'),
     );
@@ -88,18 +91,34 @@ class _MyAppState extends State<MyApp> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Expences App'),
-        actions: [IconButton(onPressed: _bottomOverlay, icon: Icon(Icons.add))],
-      ),
-      body: Column(
-        children: [
-          Chart(expenses:_ListOfRegisterExpences ,),
-          Expanded(
-            child: maincontent,
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Expences App'),
+          actions: [
+            IconButton(onPressed: _bottomOverlay, icon: Icon(Icons.add))
+          ],
+        ),
+        body: width < 600
+            ? Column(
+                children: [
+                  Chart(
+                    expenses: _ListOfRegisterExpences,
+                  ),
+                  Expanded(
+                    child: maincontent,
+                  )
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: Chart(
+                      expenses: _ListOfRegisterExpences,
+                    ),
+                  ),
+                  Expanded(
+                    child: maincontent,
+                  )
+                ],
+              ));
   }
 }

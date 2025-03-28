@@ -71,99 +71,109 @@ Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      //mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: TextField(
-            controller: _tittController,
-            maxLength: 50,
-            decoration: InputDecoration(
-              label: Text('Enter The Expense Type*'),
-            ),
-          ),
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+
+        child: Padding(
+          padding:  EdgeInsets.fromLTRB(16,48,16,keyboardSpace+16),
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextField(
-                  controller: _amountController,
-                  keyboardType: TextInputType.number,
+                  controller: _tittController,
                   maxLength: 50,
                   decoration: InputDecoration(
-                    prefix: Text('\$'),
-                    label: Text('Amount*'),
+                    label: Text('Enter The Expense Type*'),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Row(
                 children: [
-                  Text(_selectedDate == null
-                      ? 'selected Date'
-                      : Formater.format(_selectedDate!)),
-                  IconButton(
-                      onPressed: _presentDatePicker,
-                      icon: Icon(Icons.date_range_rounded))
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 50,
+                        decoration: InputDecoration(
+                          prefix: Text('\₹'),
+                          label: Text('Amount*'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(_selectedDate == null
+                            ? 'selected Date'
+                            : Formater.format(_selectedDate!)),
+                        IconButton(
+                            onPressed: _presentDatePicker,
+                            icon: Icon(Icons.date_range_rounded))
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              DropdownButton(
-                  value: _selectedDropdown,
-                  items: Category.values
-                      .map(
-                        (category) => DropdownMenuItem(
-                          value: category,
-                          child: Text(
-                            category.name.toUpperCase(),
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedDropdown = value!;
-                    });
-                  }),
-              Spacer(),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Cancel')),
-              ElevatedButton(
-                onPressed: () {
-                  print(_tittController);
-                  _submitExpenxedata();
-                 // Navigator.pop(context);
-                },
-                child: Text('save Expense'),
+              SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    DropdownButton(
+                        value: _selectedDropdown,
+                        items: Category.values
+                            .map(
+                              (category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(
+                                  category.name.toUpperCase(),
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedDropdown = value!;
+                          });
+                        }),
+                    Spacer(),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancel')),
+                    ElevatedButton(
+                      onPressed: () {
+                        print(_tittController);
+                        _submitExpenxedata();
+                       // Navigator.pop(context);
+                      },
+                      child: Text('save Expense'),
+                    )
+                  ],
+                ),
               )
             ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }
